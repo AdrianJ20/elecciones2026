@@ -73,7 +73,9 @@ The official results portal is authoritative but not optimized for a focused, re
 - User explicitly authorized decoupling publication from unavailable ONPE data, with commit and push to the same repository. No bypasses or fabricated data are allowed.
 
 ### T5 — Publish safely when official data is unavailable
-- Status: independently verified locally; authorized commit/push and remote verification next.
+- Status: done — recovery publication independently verified.
+- Remote evidence: run `37274809695` succeeded for `86af1fe`, including build and deployment. Collection still returned ONPE HTTP 302; no snapshot was published. Pages API and deploy logs report `https://adrianj20.github.io/elecciones2026/`.
+- Work-unit commit: `86af1fee144faa98cf1b9b4f67f54a85abd4eb80` (`fix: deploy Pages when official data is unavailable`) created on `fix/pages-unavailable-data` and pushed to `origin/main` under explicit user authorization.
 - Branch: `fix/pages-unavailable-data`; no commit or push performed by the implementation writer.
 - Scope: deployment workflow, unavailable-data UI, regression tests, and documentation.
 - Outcome: only ONPE collection uses `continue-on-error`; its failed `outcome` produces an Actions warning and summary, not a success claim. Scheduled/manual collection remains enabled. Tests, structural checks, build, and upload remain mandatory before deployment.
@@ -84,7 +86,8 @@ The official results portal is authoritative but not optimized for a focused, re
 - Independent verification: tests 8/8, check, build without snapshot, exact three-file byte-identical artifact, and PyYAML workflow parsing passed. Isolated malformed JSON, missing provenance, and nonofficial-source snapshots each failed build with exit 1.
 - Chrome smoke: unavailable state, cleared metrics/timestamp, official link, real refresh, two same-origin app fetches, no runtime exceptions, and no ONPE requests passed. Initial test-harness syntax/routing assertions failed; a whole-page origin assertion exposed Kaspersky-injected traffic. Final isolated browser blocked that environment script only; antivirus/system settings were not changed.
 - Native review: four lenses approved `review-67950ed750ef17f7`; exact acknowledgement completed and authority burned.
-- Limits: live ONPE data, remote Actions recovery, public deployment, and assistive-technology verification remain unverified. Clean runners do not retain a previous run’s snapshot; successful collection is required to publish actual metrics.
+- Public verification: run `37274809695` succeeded for the recovery commit. Public HTML, JS, and CSS returned HTTP 200 and matched tracked commit bytes exactly. Snapshot returned expected HTTP 404 because collection failed with HTTP 302; no substitute data was created.
+- Limits: public browser smoke was skipped because the temporary harness was not promptly available; local Chrome smoke passed. Assistive-technology testing was not run. Live ONPE data remains unavailable. Clean runners do not retain a previous run’s snapshot; successful collection is required to publish actual metrics.
 
 ## Next step
-Parent: independently verify/review T5 and run the production-build checks, then commit and push the authorized recovery and verify the remote Actions result and deployed site. Remote publication remains unverified.
+Publication recovery is complete at https://adrianj20.github.io/elecciones2026/. Official metrics remain unavailable until a permitted ONPE collection succeeds; candidate results require a separate verifiable official payload.
