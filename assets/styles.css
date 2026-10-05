@@ -1,0 +1,178 @@
+:root {
+  color: #17202a;
+  background: #f6f8fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+}
+
+.dashboard {
+  box-sizing: border-box;
+  max-width: 68rem;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem);
+}
+
+.hero,
+.data-panel,
+.candidate-notice,
+.provenance {
+  max-width: 56rem;
+}
+
+.eyebrow {
+  color: #6b2c91;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-block: 0.25rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.1;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.intro {
+  max-width: 42rem;
+  font-size: 1.125rem;
+}
+
+.candidate-notice,
+.data-panel,
+.provenance {
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
+
+.candidate-notice {
+  border-left: 0.35rem solid #9c5500;
+  background: #fff5df;
+  padding: 1.25rem 1.5rem;
+}
+
+.candidate-notice p,
+.provenance p {
+  margin-bottom: 0;
+}
+
+.data-panel {
+  background: #ffffff;
+  box-shadow: 0 0.15rem 0.6rem rgb(23 32 42 / 12%);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.panel-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.panel-heading p {
+  margin-top: 0.25rem;
+}
+
+button {
+  border: 0.1rem solid #004b87;
+  border-radius: 0.25rem;
+  background: #004b87;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+}
+
+button:hover:not(:disabled) {
+  background: #003965;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.progress-bar {
+  overflow: hidden;
+  height: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 999px;
+  background: #d8e1e8;
+}
+
+.progress-fill {
+  display: block;
+  width: var(--progress-value, 0%);
+  height: 100%;
+  background: #087f5b;
+  transition: width 180ms ease-out;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.metrics div {
+  border-top: 0.1rem solid #d8e1e8;
+  padding-top: 0.75rem;
+}
+
+.metrics dt {
+  color: #4d5b67;
+  font-weight: 700;
+}
+
+.metrics dd {
+  margin: 0.25rem 0 0;
+  font-size: 1.125rem;
+}
+
+.provenance {
+  border-top: 0.1rem solid #c6d0d9;
+  padding-top: 1.25rem;
+}
+
+a {
+  color: #004b87;
+  font-weight: 700;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 0.2rem solid #c17d00;
+  outline-offset: 0.2rem;
+}
+
+@media (max-width: 34rem) {
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-heading {
+    display: block;
+  }
+
+  .panel-heading button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill {
+    transition: none;
+  }
+}
