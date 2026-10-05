@@ -18,7 +18,8 @@ jobs:
   build:
     if: >-
       github.event_name != 'push' ||
-      github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+      github.ref ==
+      format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,7 +31,21 @@ jobs:
         with:
           node-version: 20
       - name: Collect validated ONPE snapshot
+        id: collect
+        continue-on-error: true
         run: npm run collect:onpe
+      - name: Report unavailable official data
+        if: ${{ always() && steps.collect.outcome == 'failure' }}
+        run: |
+          echo "::warning::Falló la recolección de ONPE; consulte su registro."
+          printf '%s\n' \
+            '### Recolección de ONPE fallida' \
+            'Datos oficiales temporalmente no disponibles.' \
+            'Consulte el registro del paso de recolección para ver el error.' \
+            'No se generó un snapshot de respaldo ni cifras ficticias.' \
+            'Sin un snapshot válido, el panel se publica sin métricas.' \
+            'La publicación exige pruebas, comprobaciones y compilación.' \
+            >> "$GITHUB_STEP_SUMMARY"
       - name: Run tests
         run: npm test
       - name: Run structural checks

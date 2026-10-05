@@ -136,10 +136,19 @@ function renderSnapshot(elements, snapshot) {
 
 function renderUnavailable(elements, error) {
   elements.progressSection.hidden = true;
+  elements.percentage.textContent = "—";
+  elements.actas.textContent = "—";
+  elements.retrievedAt.textContent = "—";
+  elements.progressBar.style.removeProperty("--progress-value");
+  elements.progressBar.removeAttribute("aria-valuenow");
+  elements.progressBar.setAttribute("aria-valuetext", "Sin datos cargados");
   elements.officialState.hidden = true;
+  elements.officialState.textContent = "";
+  elements.sourceName.textContent = "ONPE";
+  elements.sourceLink.href = "https://resultadoelectoral.onpe.gob.pe/";
   setStatus(
     elements,
-    `Datos no disponibles. No fue posible validar el snapshot local: ${error.message} Consulte la fuente oficial enlazada.`,
+    `Datos oficiales temporalmente no disponibles. No fue posible validar el snapshot local: ${error.message} Consulte la fuente oficial enlazada.`,
   );
 }
 

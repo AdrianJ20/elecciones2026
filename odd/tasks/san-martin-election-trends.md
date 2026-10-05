@@ -67,5 +67,24 @@ The official results portal is authoritative but not optimized for a focused, re
 - 2026-10-05: T2 completed after independent verification. `npm test` passed 3/3 and `npm run check` passed. ONPE provenance is restricted to the exact official hostname over HTTPS.
 - 2026-10-05: T3 completed after independent verification. `npm test` (3/3), `npm run check`, `npm run build`, workflow YAML parsing, and `dist/` allowlist assertions passed. Remote collection/deployment was not run.
 
+## Publication recovery
+- Initial commit `7eb3882feb623c88a113dd40a7be038f67542f8f` was pushed to `AdrianJ20/elecciones2026` on `main` with explicit user authorization.
+- GitHub Pages is configured for GitHub Actions. Run `37269364595` failed collecting ONPE data (HTTP 302); a local endpoint request returned HTTP 403.
+- User explicitly authorized decoupling publication from unavailable ONPE data, with commit and push to the same repository. No bypasses or fabricated data are allowed.
+
+### T5 — Publish safely when official data is unavailable
+- Status: independently verified locally; authorized commit/push and remote verification next.
+- Branch: `fix/pages-unavailable-data`; no commit or push performed by the implementation writer.
+- Scope: deployment workflow, unavailable-data UI, regression tests, and documentation.
+- Outcome: only ONPE collection uses `continue-on-error`; its failed `outcome` produces an Actions warning and summary, not a success claim. Scheduled/manual collection remains enabled. Tests, structural checks, build, and upload remain mandatory before deployment.
+- UI: absent/unreadable/invalid local data displays “Datos oficiales temporalmente no disponibles”, hides and clears metrics/timestamp/progress, retains the exact official ONPE link, and re-enables refresh. Successful verified data restores the metrics. All browser data requests remain same-origin.
+- RED: `npm test` observed 5 intended failures (missing snapshot, network/invalid data, failed refresh, static fallback, and workflow recovery); the original 3 validation/formatting tests passed.
+- GREEN: `npm test` passed 8/8 after implementation; a subsequent run also passed 8/8 with alternate provenance/region cases and stale state/link cleanup assertions.
+- Check: `npm run check` passed syntax and deterministic snapshot fixture/data-contract checks. Workflow edit diagnostics reported YAML clean; workflow contract regression runs in the existing `npm test` target.
+- Independent verification: tests 8/8, check, build without snapshot, exact three-file byte-identical artifact, and PyYAML workflow parsing passed. Isolated malformed JSON, missing provenance, and nonofficial-source snapshots each failed build with exit 1.
+- Chrome smoke: unavailable state, cleared metrics/timestamp, official link, real refresh, two same-origin app fetches, no runtime exceptions, and no ONPE requests passed. Initial test-harness syntax/routing assertions failed; a whole-page origin assertion exposed Kaspersky-injected traffic. Final isolated browser blocked that environment script only; antivirus/system settings were not changed.
+- Native review: four lenses approved `review-67950ed750ef17f7`; exact acknowledgement completed and authority burned.
+- Limits: live ONPE data, remote Actions recovery, public deployment, and assistive-technology verification remain unverified. Clean runners do not retain a previous run’s snapshot; successful collection is required to publish actual metrics.
+
 ## Next step
-Request explicit authorization to create the initial commit and publish to a user-provided GitHub repository. After the initial push, set the repository Pages source to GitHub Actions.
+Parent: independently verify/review T5 and run the production-build checks, then commit and push the authorized recovery and verify the remote Actions result and deployed site. Remote publication remains unverified.
